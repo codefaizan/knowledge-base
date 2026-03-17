@@ -34,3 +34,13 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Share to app (PWA)
+
+This app now includes a Web Share Target in its manifest. When installed on supported Android browsers, it can appear in the system share sheet.
+
+- Shared links and text open `/share`
+- Incoming `url`, `title`, and `text` values are prefilled
+- Users can quickly review, add tags, and save
+
+On unsupported platforms (like iOS and most desktop flows), users can still paste links/text manually from the home screen capture box.

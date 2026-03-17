@@ -16,6 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Knowledge Base",
   description: "Personal knowledge capture and retrieval",
+  manifest: "/manifest.webmanifest",
 };
 
 export default function RootLayout({

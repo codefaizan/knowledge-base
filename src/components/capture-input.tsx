@@ -4,12 +4,24 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 interface CaptureInputProps {
   onCapture: (input: { text: string; tags: string[]; image?: File; link?: string }) => Promise<void>;
+  initialText?: string;
+  initialLink?: string;
+  initialTags?: string;
+  submitLabel?: string;
+  onCaptured?: () => void;
 }
 
-export function CaptureInput({ onCapture }: CaptureInputProps) {
-  const [text, setText] = useState("");
-  const [linkInput, setLinkInput] = useState("");
-  const [tagInput, setTagInput] = useState("");
+export function CaptureInput({
+  onCapture,
+  initialText = "",
+  initialLink = "",
+  initialTags = "",
+  submitLabel = "⌘Enter: save",
+  onCaptured,
+}: CaptureInputProps) {
+  const [text, setText] = useState(initialText);
+  const [linkInput, setLinkInput] = useState(initialLink);
+  const [tagInput, setTagInput] = useState(initialTags);
   const [pastedImage, setPastedImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isDraggingImage, setIsDraggingImage] = useState(false);
@@ -49,6 +61,7 @@ export function CaptureInput({ onCapture }: CaptureInputProps) {
         setLinkInput("");
         setTagInput("");
         setPastedImage(null);
+        onCaptured?.();
       } catch (error) {
         const message = error instanceof Error ? error.message : "Failed to save item. Please try again.";
         setErrorMessage(message);
@@ -56,7 +69,7 @@ export function CaptureInput({ onCapture }: CaptureInputProps) {
         setUploading(false);
       }
     },
-    [text, linkInput, tagInput, pastedImage, onCapture]
+    [text, linkInput, tagInput, pastedImage, onCapture, onCaptured]
   );
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -186,7 +199,7 @@ export function CaptureInput({ onCapture }: CaptureInputProps) {
           disabled={uploading || (!text.trim() && !pastedImage && !linkInput.trim())}
           className="text-xs text-zinc-300 px-2.5 py-1.5 border border-zinc-700 bg-zinc-800 rounded-md hover:bg-zinc-700 disabled:opacity-30 cursor-pointer whitespace-nowrap transition-colors"
         >
-          {uploading ? "Uploading..." : "⌘Enter: save"}
+          {uploading ? "Uploading..." : submitLabel}
         </button>
       </div>
     </div>
