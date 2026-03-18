@@ -1,10 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/components/auth-provider";
 import { getSupabase } from "@/lib/supabase";
 
 export default function LoginPage() {
+  const { user, loading } = useAuth();
+  const router = useRouter();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!loading && user) {
+      router.replace("/");
+    }
+  }, [loading, user, router]);
 
   const signIn = async () => {
     setErrorMessage(null);
@@ -24,6 +34,14 @@ export default function LoginPage() {
       setErrorMessage(error.message || "Google sign-in failed. Please try again.");
     }
   };
+
+  if (loading || user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-zinc-950">
+        <p className="text-zinc-500 text-sm">Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-zinc-950">
