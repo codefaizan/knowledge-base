@@ -150,7 +150,7 @@ export function CaptureInput({
         value={linkInput}
         onChange={(e) => setLinkInput(e.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder="link (optional): https://..."
+        placeholder="link"
         disabled={uploading}
         className="w-full text-sm px-2.5 py-1.5 border border-zinc-800 bg-zinc-950 text-zinc-100 rounded-md placeholder:text-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-700 disabled:opacity-50"
       />

@@ -28,8 +28,8 @@ export function ItemCard({ item, onDelete }: ItemCardProps) {
   const shouldShowTextToggle = isTextItem && item.content.length > 120;
 
   return (
-    <div className="group border border-zinc-800 bg-zinc-900/60 rounded-lg p-3.5 hover:border-zinc-700 transition-colors">
-      <div className="mb-2">
+    <div className="group h-full flex flex-col border border-zinc-800 bg-zinc-900/60 rounded-lg p-3.5 hover:border-zinc-700 transition-colors">
+      <div className="mb-2 flex-1">
         {item.type === "image" && (
           <>
             <img
@@ -106,7 +106,7 @@ export function ItemCard({ item, onDelete }: ItemCardProps) {
         </span>
         <button
           onClick={() => onDelete(item.id)}
-          className="text-xs text-red-400 opacity-0 group-hover:opacity-100 transition-opacity hover:text-red-300 cursor-pointer"
+          className="text-xs text-red-400 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity hover:text-red-300 cursor-pointer"
         >
           delete
         </button>
