@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import type { Item } from "@/hooks/use-items";
 
 interface ItemCardProps {
@@ -21,6 +22,11 @@ function formatRelativeTime(dateStr: string): string {
 }
 
 export function ItemCard({ item, onDelete }: ItemCardProps) {
+  const [isTextExpanded, setIsTextExpanded] = useState(false);
+
+  const isTextItem = item.type === "text";
+  const shouldShowTextToggle = isTextItem && item.content.length > 120;
+
   return (
     <div className="group border border-zinc-800 bg-zinc-900/60 rounded-lg p-3.5 hover:border-zinc-700 transition-colors">
       <div className="mb-2">
@@ -45,16 +51,39 @@ export function ItemCard({ item, onDelete }: ItemCardProps) {
               href={item.content}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-blue-400 hover:text-blue-300 hover:underline break-all"
+              className="block text-sm text-blue-400 hover:text-blue-300 hover:underline break-all overflow-hidden"
+              style={{
+                display: "-webkit-box",
+                WebkitBoxOrient: "vertical",
+                WebkitLineClamp: 2,
+              }}
+              title={item.content}
             >
               {item.content}
             </a>
           </div>
         )}
         {item.type === "text" && (
-          <p className="text-sm text-zinc-200 whitespace-pre-wrap break-words">
-            {item.content}
-          </p>
+          <div>
+            <p
+              className={`text-sm text-zinc-200 whitespace-pre-wrap break-words ${
+                isTextExpanded
+                  ? ""
+                  : "overflow-hidden [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical]"
+              }`}
+            >
+              {item.content}
+            </p>
+            {shouldShowTextToggle && (
+              <button
+                type="button"
+                onClick={() => setIsTextExpanded((prev) => !prev)}
+                className="mt-1 text-xs text-blue-400 hover:text-blue-300 hover:underline cursor-pointer"
+              >
+                {isTextExpanded ? "Read less" : "Read more"}
+              </button>
+            )}
+          </div>
         )}
       </div>
 
