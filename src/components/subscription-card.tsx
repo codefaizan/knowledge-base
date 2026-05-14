@@ -61,8 +61,8 @@ export function SubscriptionCard({ subscription, onUpdate, onDelete }: Props) {
     try {
       await onUpdate(subscription.id, {
         service_name: serviceName.trim(),
-        account_email: accountEmail.trim() || null,
-        expiry_date: expiryDate || null,
+        account_email: accountEmail.trim() || undefined,
+        expiry_date: expiryDate || undefined,
         notes,
       });
       setIsEditing(false);

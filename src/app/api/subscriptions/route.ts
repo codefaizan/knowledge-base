@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
     if (userError || !user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const { data, error } = await supabase
-      .from<SubscriptionRow>("subscriptions")
+      .from("subscriptions")
       .select("*")
       .eq("user_id", user.id)
       .order("expiry_date", { ascending: true });
@@ -109,11 +109,11 @@ export async function PATCH(request: NextRequest) {
     }
     if (body.account_email !== undefined) {
       const account_email = String(body.account_email).trim();
-      updates.account_email = account_email || null;
+      updates.account_email = account_email || undefined;
     }
     if (body.expiry_date !== undefined) {
       const expiry_date = String(body.expiry_date).trim();
-      updates.expiry_date = expiry_date || null;
+      updates.expiry_date = expiry_date || undefined;
     }
     if (body.notes !== undefined) {
       updates.notes = String(body.notes);

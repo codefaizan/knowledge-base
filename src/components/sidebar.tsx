@@ -18,7 +18,7 @@ const links = [
 export function Sidebar() {
   const pathname = usePathname() ?? "/";
   const [collapsed, setCollapsed] = useState(false);
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   const { expiringSoonCount } = useSubscriptions(user?.id);
 
   return (
@@ -78,11 +78,22 @@ export function Sidebar() {
           </ul>
         </nav>
 
-        <div className="px-3 py-3">
+        <div className="px-3 py-3 space-y-2">
+          <button
+            type="button"
+            onClick={signOut}
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-md border border-zinc-800 bg-zinc-900/70 hover:bg-zinc-900 transition-colors text-zinc-300 hover:text-zinc-100 ${collapsed ? "justify-center" : "justify-start"}`}
+          >
+            <span aria-hidden className="flex-none text-zinc-400">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/><path d="M13 5v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-2"/></svg>
+            </span>
+            {!collapsed && <span className="text-sm">Sign out</span>}
+          </button>
+
           {!collapsed ? (
             <div className="text-xs text-zinc-500">v1.0</div>
           ) : (
-            <div className="text-xs text-zinc-500">v1</div>
+            <div className="text-xs text-zinc-500 text-center">v1</div>
           )}
         </div>
       </div>

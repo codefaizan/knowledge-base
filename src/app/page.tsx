@@ -9,7 +9,7 @@ import { ItemCard } from "@/components/item-card";
 import { useItems } from "@/hooks/use-items";
 
 export default function HomePage() {
-  const { user, loading: authLoading, signOut } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const router = useRouter();
   const {
     items,
@@ -52,12 +52,6 @@ export default function HomePage() {
               <div className="flex-1">
                 <SearchBar value={search} onChange={setSearch} />
               </div>
-              <button
-                onClick={signOut}
-                className="text-sm text-zinc-400 hover:text-zinc-200 whitespace-nowrap cursor-pointer border border-zinc-800 bg-zinc-900/70 px-3 py-2 rounded-md transition-colors"
-              >
-                Sign out
-              </button>
             </div>
 
             {/* Tag filter */}
